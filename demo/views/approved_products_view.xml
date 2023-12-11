@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_approved_products_tree" model="ir.ui.view">
+        <field name="name">approved.products.tree</field>
+        <field name="model">approved.products</field>
+        <field name="arch" type="xml">
+            <tree create="true" edit="true">
+                <field name="created_by"/>
+                <field name="product_image" widget="image" class="oe_avatar" width="80px"/>
+                <field name="reference_code"/>
+                <field name="product_type"/>
+                <field name="product_class"/>
+                <field name="product_code"/>
+                <field name="product_name"/>
+                <field name="brand"/>
+                <field name="unit"/>
+                <field name="exchange_rate_euro" optional="hide"/>
+                <field name="length_of_term" optional="hide"/>
+                <field name="is_stocked" optional="hide"/>
+                <field name="length_of_term" optional="hide"/>
+
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_approved_products_graph" model="ir.ui.view">
+        <field name="name">approved.products.graph</field>
+        <field name="model">approved.products</field>
+        <field name="arch" type="xml">
+            <graph string="Inventory Products Approved Graph">
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_approved_products_pivot" model="ir.ui.view">
+        <field name="name">approved.products.pivot</field>
+        <field name="model">approved.products</field>
+        <field name="arch" type="xml">
+            <graph string="Inventory Products Approved Graph">
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_approved_products_form" model="ir.ui.view">
+        <field name="name">approved.products.form</field>
+        <field name="model">approved.products</field>
+        <field name="arch" type="xml">
+            <form duplicate="0">
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_quantity_widget" class="oe_stat_button" type="object"
+                                icon="fa-archive">
+                            <field name="quantity_widget" widget="statinfo" string="Stok"/>
+                        </button>
+                        <button name="action_purchased_quantity_widget" class="oe_stat_button" type="object"
+                                icon="fa-signal">
+                            <field name="purchased_quantity_widget" widget="statinfo" string="Satın Alınan"/>
+                        </button>
+                    </div>
+                    <div class="container">
+                        <div class="row mb-3">
+                            <div class="col-9 card p-3 shadow-sm rounded">
+                                <field name="reference_code" class="display-3"/>l
+                                <label for="product_type">Ürün Türü</label>
+                                <field name="product_type"/>
+                                <label for="product_class">Ürün Grubu</label>
+                                <field name="product_class"/>
+                                <label for="created_by">Formu Oluşturan</label>
+                                <field name="created_by" placeholder="Select from your employees"/>
+                                <div name="options" class="mt-3">
+                                    <span class="d-inline-block mr-4">
+                                        <field name="can_be_sold" on_change="1" modifiers="{}"/>
+                                        <label for="can_be_sold"/>
+                                    </span>
+                                    <span class="d-inline-block">
+                                        <field name="can_be_purchased" modifiers="{}"/>
+                                        <label for="can_be_purchased"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-3 card p-3 shadow-sm rounded"
+                                 style="display:flex; justify-content:center; flex-direction: row-reverse; align-items: center;">
+                                <field name="product_image" widget="image" class="oe_avatar"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-7 card p-3 shadow-sm rounded">
+                                <group>
+                                    <h5 class="card-title">Parça Bilgileri</h5>
+                                    <br/>
+                                    <br/>
+                                    <field name="product_name" placeholder="Lütfen Ürün Adını Giriniz"/>
+                                    <field name="brand" placeholder="Lütfen Markayı Giriniz"/>
+                                    <field name="product_code" placeholder="Lütfen Model/Ürün Kodunu Giriniz"/>
+                                </group>
+                                <label for="technical_details">Teknik Özellikler</label>
+                                <field name="technical_details" placeholder="Lütfen Teknik Özellikleri Giriniz"/>
+                            </div>
+                            <div class="col-5 card p-3 shadow-sm rounded">
+                                <group>
+                                    <h5 class="card-title">Parça Bilgileri</h5>
+                                    <br/>
+                                    <br/>
+                                    <field name="length_of_term" placeholder="Lütfen Termin Süresini Giriniz"/>
+                                    <field name="unit"/>
+                                </group>
+                            </div>
+                        </div>
+                    </div>
+
+                    <notebook>
+                        <page string="BUY">
+                            <div class="container">
+                                <div class="row mb-3">
+                                    <div class="col-6 card p-3 shadow-sm rounded">
+                                        <group>
+                                            <h5 class="card-title">Fiyat Bilgileri</h5>
+                                            <br/>
+                                            <br/>
+                                            <field name="currency_type"/>
+                                            <br/>
+                                            <field name="exchange_rate_euro"/>
+                                            <field name="exchange_rate_dollar"/>
+                                            <br/>
+                                            <field name="unit_price"/>
+                                            <field name="unit_price_eur"/>
+                                        </group>
+                                    </div>
+                                    <div class="col-6 card p-3 shadow-sm rounded">
+                                        <group>
+                                            <h5 class="card-title">Stok Bilgileri</h5>
+                                            <br/>
+                                            <br/>
+                                            <field name="is_stocked"/>
+                                        </group>
+                                    </div>
+                                </div>
+                            </div>
+                        </page>
+
+
+                        <page string="Teknik Data Sheet">
+                            <div class="container-fluid">
+                                <field filename="technical_datasheet_filename"
+                                       name="technical_datasheet" widget="pdf_viewer"/>
+                            </div>
+                        </page>
+
+                        <page string="Müşteriler Ve Tedarikçiler">
+                            <field name="contacts_ids" widget="one2many">
+                                <tree string="Products" editable="bottom" class="custom_class">
+                                    <field name="name"/>
+                                    <field name="contact_type"/>
+                                    <field name="price"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_approved_products_kanban" model="ir.ui.view">
+        <field name="name">approved.products.kanban</field>
+        <field name="model">approved.products</field>
+        <field name="arch" type="xml">
+            <kanban copy="false" create="false" quick_create="false" group_create="false" records_draggable="false">
+                <field name="id"/>
+                <field name="product_image"/>
+                 <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click">
+
+                            <div class="o_kanban_image mr-1">
+                                <img t-att-src="kanban_image('approved.products', 'product_image', record.id.raw_value)"
+                                     class="o_kanban_image_inner_pic"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <div name="product_name" class="mt-1">
+                                    <b>Product Name:</b>
+                                    <field name="product_name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_approved_products_menu_search" model="ir.ui.view">
+        <field name="name">approved.products.search</field>
+        <field name="model">approved.products</field>
+        <field name="arch" type="xml">
+            <search string="Projects">
+                <field name="reference_code"
+                       filter_domain="['|', '|', '|', '|', ('reference_code', 'ilike', self), ('product_name', 'ilike', self), ('brand', 'ilike', self), ('product_code', 'ilike', self), ('technical_details', 'ilike', self)]"
+                       string="Çoklu Arama"/>
+                <searchpanel>
+                    <field name="product_type" string="Ürün Türü" enable_counters="1"/>
+                    <field name="is_stocked" string="Stoklu mu?" enable_counters="1"/>
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_approved_products_menu" model="ir.actions.act_window">
+        <field name="name">Ürün Listesi</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">approved.products</field>
+        <field name="view_mode">tree,kanban,form,graph,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Burada henüz ürün yok!
+            </p>
+        </field>
+    </record>
+</odoo>

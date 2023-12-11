@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_approved_products,access.approved.products,model_approved_products,,1,1,1,1
+access_company_contacts,access.company.contacts,model_company_contacts,,1,1,1,1
+access_product_contact_lines,access.product.contact.lines,model_product_contact_lines,,1,1,1,1
+access_purchases_menu,purchases.menu,model_purchases_menu,,1,1,1,1

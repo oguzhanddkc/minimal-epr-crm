@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_purchases_menu_tree" model="ir.ui.view">
+        <field name="name">purchases.menu.tree</field>
+        <field name="model">purchases.menu</field>
+        <field name="arch" type="xml">
+            <tree create="true" edit="true">
+                <field name="created_by"/>
+                <field name="reference_code"/>
+                <field name="purchase_type"/>
+                <field name="purchase_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_purchases_menu_graph" model="ir.ui.view">
+        <field name="name">purchases.menu.graph</field>
+        <field name="model">purchases.menu</field>
+        <field name="arch" type="xml">
+            <graph string="Purchases Menu Graph">
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_purchases_menu_pivot" model="ir.ui.view">
+        <field name="name">purchases.menu.pivot</field>
+        <field name="model">purchases.menu</field>
+        <field name="arch" type="xml">
+            <graph string="Purchase Menu Graph">
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_purchases_menu_form" model="ir.ui.view">
+        <field name="name">purchases.menu.form</field>
+        <field name="model">purchases.menu</field>
+        <field name="arch" type="xml">
+            <form duplicate="0">
+                <header>
+                    <button id="button_rfq" name="action_rfq" string="Confirm Order" class="btn-primary"
+                            confirm="Are you sure that you need to confirm?"
+                            states="rfq"
+                            type="object"/>
+                    <button id="button_po" name="action_po" string="Confirm Receipt Date" class="btn-primary"
+                            states="po"
+                            type="object"/>
+                    <button id="button_cancel" name="action_cancel" string="Cancel" class="btn-primary"
+                            states="cancel"
+                            type="object"/>
+
+                    <field name="state" widget="statusbar" statusbar_visible="rfq,po"/>
+                </header>
+                <sheet>
+                    <group>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 card p-3 shadow-sm rounded">
+                                    <h1>
+                                        <field name="reference_code"/>
+                                    </h1>
+                                    <h5 class="card-title">Quotation Type</h5>
+                                    <field name="purchase_type" class="form-select"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 card p-3 shadow-sm rounded">
+                                    <group>
+                                        <h5 class="card-title">Quotation Informations</h5>
+                                        <br/>
+                                        <br/>
+                                        <field name="product_name_id"/>
+                                        <field name="created_by"/>
+                                        <field name="department"/>
+                                        <field name="purchase_date"/>
+                                        <field name="contact_id_domain" invisible="1"/>
+                                        <field name="contact_id" domain="contact_id_domain"/>
+                                        <field name="price" widget="badge" decoration-success="1"/>
+                                    </group>
+                                </div>
+
+                            </div>
+                        </div>
+                    </group>
+
+                    <notebook>
+                        <page string="Products">
+                            <field name="purchased_product_ids" widget="one2many_list">
+                                <tree string="Products" editable="bottom" class="custom_class">
+                                    <field name="name"/>
+                                    <field name="contact_type"/>
+                                    <field name="price"/>
+                                </tree>
+                            </field>
+                        </page>
+
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_purchases_menu_search" model="ir.ui.view">
+        <field name="name">purchases.menu.search</field>
+        <field name="model">purchases.menu</field>
+        <field name="arch" type="xml">
+            <search string="Projects">
+                <field name="reference_code"
+                       filter_domain="['|', '|', '|', '|', ('reference_code', 'ilike', self), ('created_by', 'ilike', self), ('purchase_type', 'ilike', self)]"
+                       string="Çoklu Arama"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_purchases_menu" model="ir.actions.act_window">
+        <field name="name">Quotations &amp; Purchase Orders</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">purchases.menu</field>
+        <field name="view_mode">tree,form,graph,pivot</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There is no rfq!
+            </p>
+        </field>
+    </record>
+</odoo>
