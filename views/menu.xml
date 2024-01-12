@@ -1,0 +1,41 @@
+<odoo>
+
+    <menuitem id="menu_demo_erp"
+              name="DemoERP"
+              sequence="10"/>
+
+    <menuitem id="menu_approved_products_root"
+              name="Products"
+              parent="menu_demo_erp"
+              sequence="20"/>
+
+    <menuitem id="menu_approved_products"
+              name="Products"
+              parent="menu_approved_products_root"
+              action="action_approved_products_menu"
+              sequence="10"/>
+
+    <menuitem id="menu_company_contacts_root"
+              name="Customers &amp; Suppliers"
+              parent="menu_demo_erp"
+              sequence="30"/>
+
+    <menuitem id="menu_company_contacts"
+              name="Customers &amp; Suppliers"
+              parent="menu_company_contacts_root"
+              action="action_company_contacts"
+              sequence="10"/>
+
+    <menuitem id="menu_purchases_menu_root"
+              name="Quotations &amp; Purchase Orders"
+              parent="menu_demo_erp"
+              sequence="40"/>
+
+    <menuitem id="menu_purchases_menu"
+              name="Quotations &amp; Purchase Orders"
+              parent="menu_purchases_menu_root"
+              action="action_purchases_menu"
+              sequence="20"/>
+
+
+</odoo>
